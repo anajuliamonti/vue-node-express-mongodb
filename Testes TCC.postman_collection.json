@@ -1,0 +1,1017 @@
+{
+	"info": {
+		"_postman_id": "e737dd30-773a-4905-9dcb-79faec1d8efa",
+		"name": "Testes TCC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set Vars",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ca3c7ba9-ba3b-4771-a751-90159a48b8e0",
+						"exec": [
+							"//Limpando variáveis do ambiente",
+							"pm.globals.clear();",
+							"",
+							"//Setando as variáveis das rotas",
+							"pm.globals.set(\"SERVER\", \"http://localhost:3333/\");",
+							"pm.globals.set(\"AUTH\", \"auth/v1\");",
+							"pm.globals.set(\"API\", \"api/v1\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd58bf9d-32d9-429b-bb70-0cb474ac7611",
+						"exec": [
+							"pm.test(\"Servidor UP.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}",
+					"host": [
+						"{{SERVER}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login como Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7488c92e-35b0-465f-b0a0-d7cacd8465d9",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Login realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": \"admin\",\r\n    \"senha\": \"admin\"\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/login",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Psicologo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33d2883-3a77-4a6f-b1e8-df72e746e450",
+						"exec": [
+							"pm.globals.set(\"usuario\", \"psico1\");",
+							"pm.globals.set(\"senha\", \"psico1\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c63ec42a-2741-4aae-a9d1-da6604d9ccdb",
+						"exec": [
+							"pm.test(\"Psicologo criada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dadosPessoais\": {\r\n        \"nome\": \"Psicologo 1\",\r\n        \"rg\": \"PS-11.111.111\",\r\n        \"cpf\": \"123.456.789-00\"\r\n    },\r\n    \"contato\": {\r\n        \"email\": \"psicologo1@gmail.com\",\r\n        \"telefone\": \"+5511999991111\"\r\n    },\r\n    \"acesso\": {\r\n        \"usuario\": \"{{usuario}}\",\r\n        \"senha\": \"{{senha}}\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{API}}/psicologo/",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"psicologo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Paciente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33d2883-3a77-4a6f-b1e8-df72e746e450",
+						"exec": [
+							"pm.globals.set(\"usuario\", \"pac\");",
+							"pm.globals.set(\"senha\", \"pac1\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c63ec42a-2741-4aae-a9d1-da6604d9ccdb",
+						"exec": [
+							"pm.test(\"Pessoa criada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dadosPessoais\": {\r\n        \"nome\": \"Paciente 1\",\r\n        \"rg\": \"PC-11.111.111\",\r\n        \"cpf\": \"123.456.789-00\"\r\n    },\r\n    \"contato\": {\r\n        \"email\": \"paciente2@gmail.com\",\r\n        \"telefone\": \"+5511999991111\"\r\n    },\r\n    \"acesso\": {\r\n        \"usuario\": \"{{usuario}}\",\r\n        \"senha\": \"{{senha}}\"\r\n    },\r\n    \"psicologo\": {\r\n    \t\"idPsicologo\": \"5d599a8ee04f7a0124feabba\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{API}}/paciente/",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"paciente",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Registro",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33d2883-3a77-4a6f-b1e8-df72e746e450",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c63ec42a-2741-4aae-a9d1-da6604d9ccdb",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"paciente\": {\r\n    \t\"idPaciente\": \"5d599abce04f7a0124feabbb\"\r\n    },\r\n    \"registro\": {\r\n        \"texto\": \"Hoje eu estou me sentindo muito bem, aconteceram varias coisas muito legais comigo.\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{API}}/registros/",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"registros",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout como Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a260b0-2979-4de0-91af-24cbbbfc26f3",
+						"exec": [
+							"pm.test(\"Logout realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de2cb80f-1180-41f0-b0f2-98902b9f50c5",
+						"exec": [
+							"//Removendo token (simulando logout)",
+							"pm.globals.unset(\"token\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/logout",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login como Paciente 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7488c92e-35b0-465f-b0a0-d7cacd8465d9",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"//Salvando novo token",
+							"pm.globals.set(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Login realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": \"pac\",\r\n    \"senha\": \"pac1\"\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/login",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Paciente (Contato)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33d2883-3a77-4a6f-b1e8-df72e746e450",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c63ec42a-2741-4aae-a9d1-da6604d9ccdb",
+						"exec": [
+							"pm.test(\"Pessoa atualizada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contato\": {\r\n        \"email\": \"no-reply@nodomain.com\",\r\n        \"telefone\": \"98765-4321\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{API}}/paciente/5d522327dd34171154c4c5a9",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"paciente",
+						"5d522327dd34171154c4c5a9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Psicologo (Contato)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33d2883-3a77-4a6f-b1e8-df72e746e450",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c63ec42a-2741-4aae-a9d1-da6604d9ccdb",
+						"exec": [
+							"pm.test(\"Pessoa atualizada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contato\": {\r\n        \"email\": \"no-reply@nodomain.com\",\r\n        \"telefone\": \"98765-4321\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{API}}/psicologo/5d5222e5dd34171154c4c5a7",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"psicologo",
+						"5d5222e5dd34171154c4c5a7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout como Paciente 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a260b0-2979-4de0-91af-24cbbbfc26f3",
+						"exec": [
+							"pm.test(\"Logout realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de2cb80f-1180-41f0-b0f2-98902b9f50c5",
+						"exec": [
+							"//Removendo token (simulando logout)",
+							"pm.globals.unset(\"token\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/logout",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login como Psicologo 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7488c92e-35b0-465f-b0a0-d7cacd8465d9",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"//Salvando novo token",
+							"pm.globals.set(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Login realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": \"psico1\",\r\n    \"senha\": \"psico1\"\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/login",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Pacientes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8174d94-154c-4ac6-991d-83656857194a",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var pacientes = jsonData.pacientes;",
+							"var qtdPacientes = jsonData.pacientes.length;",
+							"",
+							"pm.globals.set(\"paciente_id\", pacientes[qtdPacientes-1]._id);",
+							"",
+							"pm.test(\"Listagem realizada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{SERVER}}{{API}}/paciente/",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"paciente",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Psicologos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8174d94-154c-4ac6-991d-83656857194a",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var psicologos = jsonData.psicologos;",
+							"var qtdPsicologos = jsonData.psicologos.length;",
+							"",
+							"pm.globals.set(\"psicologo_id\", psicologos[qtdPsicologos-1]._id);",
+							"",
+							"pm.test(\"Listagem realizada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{SERVER}}{{API}}/psicologo/",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"psicologo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Registros",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8174d94-154c-4ac6-991d-83656857194a",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var registros = jsonData.registros;",
+							"var qtdRegistros = jsonData.registros.length;",
+							"",
+							"pm.globals.set(\"registro_id\", registros[qtdRegistros-1]._id);",
+							"",
+							"pm.test(\"Listagem realizada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{SERVER}}{{API}}/registros/",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"registros",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Paciente por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8174d94-154c-4ac6-991d-83656857194a",
+						"exec": [
+							"pm.test(\"Busca realizada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{SERVER}}{{API}}/paciente/5d522327dd34171154c4c5a9",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"paciente",
+						"5d522327dd34171154c4c5a9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Psicologo por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8174d94-154c-4ac6-991d-83656857194a",
+						"exec": [
+							"pm.test(\"Busca realizada com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{SERVER}}{{API}}/psicologo/5d599a8ee04f7a0124feabba",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"psicologo",
+						"5d599a8ee04f7a0124feabba"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout como Psicologo 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a260b0-2979-4de0-91af-24cbbbfc26f3",
+						"exec": [
+							"pm.test(\"Logout realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de2cb80f-1180-41f0-b0f2-98902b9f50c5",
+						"exec": [
+							"//Removendo token (simulando logout)",
+							"pm.globals.unset(\"token\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/logout",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login como Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7488c92e-35b0-465f-b0a0-d7cacd8465d9",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Login realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": \"admin\",\r\n    \"senha\": \"admin\"\r\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/login",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Paciente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33d2883-3a77-4a6f-b1e8-df72e746e450",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c63ec42a-2741-4aae-a9d1-da6604d9ccdb",
+						"exec": [
+							"pm.test(\"Pessoa excluida com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{SERVER}}{{API}}/paciente/5d599abce04f7a0124feabbb",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"paciente",
+						"5d599abce04f7a0124feabbb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Psicologo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33d2883-3a77-4a6f-b1e8-df72e746e450",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c63ec42a-2741-4aae-a9d1-da6604d9ccdb",
+						"exec": [
+							"pm.test(\"Pessoa excluida com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{SERVER}}{{API}}/psicologo/5d599a8ee04f7a0124feabba",
+					"host": [
+						"{{SERVER}}{{API}}"
+					],
+					"path": [
+						"psicologo",
+						"5d599a8ee04f7a0124feabba"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout como Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a260b0-2979-4de0-91af-24cbbbfc26f3",
+						"exec": [
+							"pm.test(\"Logout realizado com sucesso.\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de2cb80f-1180-41f0-b0f2-98902b9f50c5",
+						"exec": [
+							"//Removendo token (simulando logout)",
+							"pm.globals.unset(\"token\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}{{AUTH}}/logout",
+					"host": [
+						"{{SERVER}}{{AUTH}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
