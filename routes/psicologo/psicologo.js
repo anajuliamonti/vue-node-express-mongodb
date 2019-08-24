@@ -2,7 +2,7 @@ const HttpStatus = require('http-status-codes');
 var express = require('express');
 var router = express.Router();
 
-const Psicologo = require('../../database/schemas/psicologo/psicologo');
+const Psicologo = require('../../database/schemas/psicologo/psicologo.js');
 
 /**
  * Função que faz a busca de psicologos

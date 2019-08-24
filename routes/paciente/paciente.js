@@ -2,7 +2,7 @@ const HttpStatus = require('http-status-codes');
 var express = require('express');
 var router = express.Router();
 
-const Paciente = require('../../database/schemas/paciente/paciente');
+const Paciente = require('../../database/schemas/paciente/paciente.js');
 
 /**
  * Função que faz a busca de pacientes

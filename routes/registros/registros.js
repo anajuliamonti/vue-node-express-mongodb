@@ -2,7 +2,7 @@ const HttpStatus = require('http-status-codes');
 var express = require('express');
 var router = express.Router();
 
-const Registro = require('../../database/schemas/registro/registro');
+const Registro = require('../../database/schemas/registro/registro.js');
 
 /**
  * Função que faz a busca de registros

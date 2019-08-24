@@ -5,8 +5,8 @@ const router = express.Router();
 require("dotenv").config();
 const jwt = require('jsonwebtoken');
 
-const Paciente = require('../../database/schemas/paciente/paciente'); //Importando o esquema Paciente para utilizarmos no login
-const Psicologo = require('../../database/schemas/psicologo/psicologo'); //Importando o esquema Psicologo para utilizarmos no login
+const Paciente = require('../../database/schemas/paciente/paciente.js'); //Importando o esquema Paciente para utilizarmos no login
+const Psicologo = require('../../database/schemas/psicologo/psicologo.js'); //Importando o esquema Psicologo para utilizarmos no login
 
 /**
  * Rota de login => POST http://localhost:3333/auth/v1/login

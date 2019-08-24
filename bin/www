@@ -17,7 +17,7 @@ var chalk = require('chalk');
 var DB = require('../database');
 require("dotenv").config();
 
-const Psicologo = require('../database/schemas/psicologo');
+const Psicologo = require('../database/schemas/psicologo/psicologo.js');
 
 /**
  * Definindo a porta em que a aplicação vai subir
