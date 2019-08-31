@@ -4,16 +4,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const Paciente = require('../paciente/paciente');
+
 const Registro = new Schema(
     {
-        paciente: {
-            idPaciente: { type: Schema.Types.ObjectId, required: true },
-        },
-        registro:
-        {
-            texto: { type: String, required: true }
-        },
-        criadoEm: { type: Date, default: Date.now }
-    })
+        texto: { type: String, required: true },
+        paciente: Paciente,
+    },
+    { timestamps: true }
+);
 
-    module.exports = mongoose.model('Registro', Registro);
+module.exports = mongoose.model('Registro', Registro);

@@ -4,6 +4,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const Psicologo = require('../psicologo/psicologo').schema;
+const Registro = require('../registro/registro').schema;
+
 const Paciente = new Schema(
     {
         dadosPessoais: {
@@ -20,14 +23,10 @@ const Paciente = new Schema(
             senha: { type: String, default: 'miojo123' },
             ultimoLogin: { type: Date, default: null }
         },
-        psicologo: {
-            idPsicologo: { type: Schema.Types.ObjectId, required: true },
-        },
-//        registros: [{
-//            idRegistro: { type: Schema.Types.ObjectId, required: true },
-//        }],
-        criadoEm: { type: Date, default: Date.now }
-    }
+        psicologo: Psicologo,
+        registros: [Registro],
+    },
+    { timestamps: true }
 )
 
 module.exports = mongoose.model('Paciente', Paciente);

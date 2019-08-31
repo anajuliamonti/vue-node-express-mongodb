@@ -20,14 +20,9 @@ const Psicologo = new Schema(
             senha: { type: String, default: 'miojo123' },
             ultimoLogin: { type: Date, default: null }
         },
-        paciente: [{
-            idPaciente: { type: Schema.Types.ObjectId, required: false },
-        }],
-//        registros: [{
-//            idRegistro: { type: Schema.Types.ObjectId, required: true },
-//        }],
-        criadoEm: { type: Date, default: Date.now }
-    }
+        paciente: [{ type: Schema.Types.ObjectId, ref: 'Paciente' }],
+    },
+    { timestamps: true }
 )
 
 module.exports = mongoose.model('Psicologo', Psicologo);
