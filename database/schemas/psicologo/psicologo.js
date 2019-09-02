@@ -19,8 +19,7 @@ const Psicologo = new Schema(
             usuario: { type: String, required: true, unique: true },
             senha: { type: String, default: 'miojo123' },
             ultimoLogin: { type: Date, default: null }
-        },
-        paciente: [{ type: Schema.Types.ObjectId, ref: 'Paciente' }],
+        }
     },
     { timestamps: true }
 )

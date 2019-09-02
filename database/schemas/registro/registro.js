@@ -4,12 +4,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Paciente = require('../paciente/paciente');
+// const Paciente = require('../paciente/paciente');
 
 const Registro = new Schema(
     {
         texto: { type: String, required: true },
-        paciente: Paciente,
+        paciente: {type: Schema.Types.ObjectId, ref: 'Paciente'},
     },
     { timestamps: true }
 );

@@ -4,8 +4,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Psicologo = require('../psicologo/psicologo').schema;
-const Registro = require('../registro/registro').schema;
+// const Psicologo = require('../psicologo/psicologo').schema;
+// const Registro = require('../registro/registro').schema;
 
 const Paciente = new Schema(
     {
@@ -23,8 +23,7 @@ const Paciente = new Schema(
             senha: { type: String, default: 'miojo123' },
             ultimoLogin: { type: Date, default: null }
         },
-        psicologo: Psicologo,
-        registros: [Registro],
+        psicologo: {type: Schema.Types.ObjectId, ref: 'Psicologo'}
     },
     { timestamps: true }
 )

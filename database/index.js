@@ -6,9 +6,9 @@ require("dotenv").config();
 const DB_URL = process.env.DB_URL;
 
 const DB_SETTINGS = {
-    useCreateIndex: false,
+    useCreateIndex: true,
     useNewUrlParser: true,
-    useFindAndModify: false,
+    useFindAndModify: true,
     user: process.env.DB_USER,
     pass: process.env.DB_PASS,
     dbName: process.env.DB_NAME

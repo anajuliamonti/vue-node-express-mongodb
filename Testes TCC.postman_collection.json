@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e737dd30-773a-4905-9dcb-79faec1d8efa",
+		"_postman_id": "0a0bb752-7bfa-4008-8971-65941627202f",
 		"name": "Testes TCC",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -197,7 +197,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"dadosPessoais\": {\r\n        \"nome\": \"Paciente 1\",\r\n        \"rg\": \"PC-11.111.111\",\r\n        \"cpf\": \"123.456.789-00\"\r\n    },\r\n    \"contato\": {\r\n        \"email\": \"paciente2@gmail.com\",\r\n        \"telefone\": \"+5511999991111\"\r\n    },\r\n    \"acesso\": {\r\n        \"usuario\": \"{{usuario}}\",\r\n        \"senha\": \"{{senha}}\"\r\n    },\r\n    \"psicologo\": {\r\n    \t\"idPsicologo\": \"5d599a8ee04f7a0124feabba\"\r\n    }\r\n}"
+					"raw": "{\r\n    \"dadosPessoais\": {\r\n        \"nome\": \"Paciente 1\",\r\n        \"rg\": \"PC-11.111.111\",\r\n        \"cpf\": \"123.456.789-00\"\r\n    },\r\n    \"contato\": {\r\n        \"email\": \"paciente2@gmail.com\",\r\n        \"telefone\": \"+5511999991111\"\r\n    },\r\n    \"acesso\": {\r\n        \"usuario\": \"{{usuario}}\",\r\n        \"senha\": \"{{senha}}\"\r\n    },\r\n    \"psicologo\": {\r\n    \t\"_id\": \"5d6da9f1fe331d43d0c0cf48\"\r\n    }\r\n}"
 				},
 				"url": {
 					"raw": "{{SERVER}}{{API}}/paciente/",
@@ -253,7 +253,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"paciente\": {\r\n    \t\"idPaciente\": \"5d599abce04f7a0124feabbb\"\r\n    },\r\n    \"registro\": {\r\n        \"texto\": \"Hoje eu estou me sentindo muito bem, aconteceram varias coisas muito legais comigo.\"\r\n    }\r\n}"
+					"raw": "{\n    \"texto\": \"Hoje eu estou me sentindo muito bem, aconteceram varias coisas muito legais comigo.\",\n    \"paciente\": {\n    \t\"_id\": \"5d6da9fdfe331d43d0c0cf49\"\n    }\n}"
 				},
 				"url": {
 					"raw": "{{SERVER}}{{API}}/registros/",
